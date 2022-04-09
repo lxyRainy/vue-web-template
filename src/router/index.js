@@ -13,5 +13,10 @@ export default new VueRouter({
       path: "/home",
       component: Home,
     },
+    // 项目一启动，立马重定向到home
+    {
+      path: "*",
+      redirect: "/home",
+    },
   ],
 })
