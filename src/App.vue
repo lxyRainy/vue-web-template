@@ -3,7 +3,8 @@
     <Header />
     <!-- 路由组件出口的地方 -->
     <router-view></router-view>
-    <Footer />
+    <!-- 控制Footer的显隐 -->
+    <Footer v-show="$route.meta.footer" />
   </div>
 </template>
 

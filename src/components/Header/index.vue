@@ -8,8 +8,9 @@
           <p>尚品汇欢迎您！</p>
           <p>
             <span>请</span>
-            <router-link to="login">登录</router-link>
-            <a href="###" class="register">免费注册</a>
+            <!-- 声明式导航 -->
+            <router-link to="/login">登录</router-link>
+            <router-link to="register" class="/register">免费注册</router-link>
           </p>
         </div>
         <div class="typeList">
@@ -27,9 +28,9 @@
     <!--头部第二行 搜索区域-->
     <div class="bottom">
       <h1 class="logoArea">
-        <a class="logo" title="尚品汇" href="###" target="_blank">
+        <router-link class="logo" title="尚品汇" to="home">
           <img src="./images/logo.png" alt="" />
-        </a>
+        </router-link>
       </h1>
       <div class="searchArea">
         <form action="###" class="searchForm">
@@ -37,8 +38,13 @@
             type="text"
             id="autocomplete"
             class="input-error input-xxlarge"
+            v-model="keyword"
           />
-          <button class="sui-btn btn-xlarge btn-danger" type="button">
+          <button
+            class="sui-btn btn-xlarge btn-danger"
+            type="button"
+            @click="goSearch"
+          >
             搜索
           </button>
         </form>
@@ -50,6 +56,31 @@
 <script>
 export default {
   name: "Header",
+  data() {
+    return {
+      keyword: "",
+    };
+  },
+  methods: {
+    // 搜索按钮的回调函数，向search路由跳转
+    goSearch() {
+      // 字符串形式
+      // this.$router.push(
+      //   "/search/" + this.keyword + "?k=" + this.keyword.toLowerCase()
+      // );
+      // 对象形式——常用。
+      // params可以不传递，如果keyword为''，改外undefined
+      this.$router.push({
+        name: "search",
+        params: {
+          keyword: this.keyword || undefined,
+        },
+        query: {
+          k: this.keyword.toUpperCase(),
+        },
+      });
+    },
+  },
 };
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <div>首页部分</div>
+  <TypeNav />
 </template>
 
 <script>
