@@ -10,6 +10,9 @@ import TypeNav from "@/pages/Home/TypeNav"
 //全局组件：第一个参数 组件名字  第二个参数：那个组件
 Vue.component(TypeNav.name, TypeNav)
 
+// 测试
+import { reqgetCategoryList } from "@/api"
+reqgetCategoryList()
 Vue.config.productionTip = false
 // 应用插件
 // Vue.use(VueRouter)
