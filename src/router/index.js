@@ -20,8 +20,8 @@ VueRouter.prototype.push = function (location, resolve, reject) {
   } else {
     originPush.call(
       this.location,
-      () => {},
-      () => {}
+      () => { },
+      () => { }
     )
   }
 }
@@ -31,8 +31,8 @@ VueRouter.prototype.replace = function (location, resolve, reject) {
   } else {
     originReplace.call(
       this.location,
-      () => {},
-      () => {}
+      () => { },
+      () => { }
     )
   }
 }
@@ -79,7 +79,7 @@ export default new VueRouter({
       // 3.函数写法——常用
       props: ($route) => ({
         keyword: $route.params.keyword,
-        k: route.query.k,
+        k: $route.query.k,
       }),
     },
     // 项目一启动，立马重定向到home
