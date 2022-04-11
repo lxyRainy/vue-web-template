@@ -16,10 +16,10 @@ let originReplace = VueRouter.prototype.replace
 // 第一个参数：往哪跳
 VueRouter.prototype.push = function (location, resolve, reject) {
   if (resolve && reject) {
-    originPush.call(this.location, resolve, reject)
+    originPush.call(this, location, resolve, reject)
   } else {
     originPush.call(
-      this.location,
+      this, location,
       () => { },
       () => { }
     )
@@ -27,10 +27,10 @@ VueRouter.prototype.push = function (location, resolve, reject) {
 }
 VueRouter.prototype.replace = function (location, resolve, reject) {
   if (resolve && reject) {
-    originReplace.call(this.location, resolve, reject)
+    originReplace.call(this, location, resolve, reject)
   } else {
     originReplace.call(
-      this.location,
+      this, location,
       () => { },
       () => { }
     )
