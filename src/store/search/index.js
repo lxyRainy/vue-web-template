@@ -1,6 +1,7 @@
+
 // state：存储数据的地方
 const state = {
-  b: 1
+
 }
 // mutations : 修改state
 const mutations = {

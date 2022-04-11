@@ -87,8 +87,8 @@ export default new VueRouter({
     },
     // 项目一启动，立马重定向到home
     {
-      path: "*",
-      redirect: "/home",
+      path: "/",
+      component: Home,
     },
   ],
 })

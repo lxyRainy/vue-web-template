@@ -9,9 +9,6 @@
     <Floor />
     <Floor />
     <Brand />
-    <!-- <button @click="add">加1</button>
-    <button>减1</button>
-    <p>count为：{{count}}</p> -->
   </div>
 </template>
 
@@ -25,15 +22,9 @@ import Brand from "@/pages/Home/Brand";
 export default {
   name: "Home",
   components: { ListContainer, Recommend, Rank, Like, Floor, Brand },
-  // computed: {
-  //   count: 2
-  // },
-  // methods: {
-  //   add () {
-  //     // 派发action
-  //     this.$store.dispatch('add')
-  //   }
-  // }
+  mounted () {
+    console.log('home-this', this)
+  }
 };
 </script>
 
