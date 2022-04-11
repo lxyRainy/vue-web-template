@@ -26,17 +26,8 @@
                     <a href="">{{c2.categoryName}}</a>
                   </dt>
                   <dd>
-                    <em>
-                      <a href="">婚恋/两性</a>
-                    </em>
-                    <em>
-                      <a href="">文学</a>
-                    </em>
-                    <em>
-                      <a href="">经管</a>
-                    </em>
-                    <em>
-                      <a href="">畅读VIP</a>
+                    <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
+                      <a href="">{{c3.categoryName}}</a>
                     </em>
                   </dd>
                 </dl>
