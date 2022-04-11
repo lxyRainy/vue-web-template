@@ -13,7 +13,9 @@ Vue.use(VueRouter)
 let originPush = VueRouter.prototype.push
 let originReplace = VueRouter.prototype.replace
 // 重写push
-// 第一个参数：往哪跳
+//第一个形参：路由跳转的配置对象（query|params）
+//第二个参数：undefined|箭头函数（成功的回调）
+//第三个参数:undefined|箭头函数（失败的回调）
 VueRouter.prototype.push = function (location, resolve, reject) {
   if (resolve && reject) {
     originPush.call(this, location, resolve, reject)
@@ -25,6 +27,7 @@ VueRouter.prototype.push = function (location, resolve, reject) {
     )
   }
 }
+//重写VueRouter.prototype身上的replace方法了
 VueRouter.prototype.replace = function (location, resolve, reject) {
   if (resolve && reject) {
     originReplace.call(this, location, resolve, reject)
