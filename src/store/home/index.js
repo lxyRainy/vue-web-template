@@ -7,17 +7,18 @@ const state = {
 }
 // mutations : 修改state
 const mutations = {
-  CATEGORYLIST (state, categroryList) {
-    state.categroryList = categroryList
+  CATEGORYLIST (state, categoryList) {
+    // console.log('-----------', categroryList)
+    state.categoryList = categoryList
   }
 }
 // actions:处理action
 const actions = {
   // 写业务逻辑，但是不能修改state
-  getCategroryList ({ commit }) {
-    let res = reqgetCategoryList()
+  async getCategoryList ({ commit }) {
+    let res = await reqgetCategoryList()
     console.log(res)
-    if (res == 200) {
+    if (res.code === 200) {
       commit('CATEGORYLIST', res.data)
     }
   }

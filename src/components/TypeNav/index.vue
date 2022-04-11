@@ -1698,17 +1698,15 @@ export default {
   name: "TypeNav",
   // 组件过载完毕，可以向服务器发请求
   mounted () {
-    console.log(this)
     // 通过vuex发送请求，获取数据，存储在仓库中
-    // this.$store.dispatch('getCategroryList')
     //派发一个action||获取商品分类的三级列表的数据
-    // this.$store.dispatch("getCategoryList");
+    this.$store.dispatch("getCategoryList");
   },
   computed: {
     //state:他是咱们大仓库中的state（包含home|search）
-    // ...mapState({
-    //   categoryList: (state) => state.home.categoryList,
-    // }),
+    ...mapState({
+      categoryList: (state) => state.home.categoryList,
+    }),
   }
 };
 </script>

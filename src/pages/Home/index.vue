@@ -23,7 +23,7 @@ export default {
   name: "Home",
   components: { ListContainer, Recommend, Rank, Like, Floor, Brand },
   mounted () {
-    console.log('home-this', this)
+
   }
 };
 </script>
