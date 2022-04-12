@@ -20,3 +20,10 @@ export const reqRegister = (data) => requests(
     method: 'post',
     data
   })
+// 登录
+export const reqUserLogin = (data) => requests(
+  {
+    url: `/user/passport/login`,
+    method: 'post',
+    data
+  })

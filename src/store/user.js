@@ -1,13 +1,17 @@
-import { reqGetCode, reqRegister } from '@/api'
+import { reqGetCode, reqRegister, reqUserLogin } from '@/api'
 // state：存储数据的地方
 const state = {
-  code: ''
+  code: '',
+  token: ''
 }
 // mutations : 修改state
 const mutations = {
   GETCODE (state, code) {
     state.code = code
   },
+  USERLOGIN (state, token) {
+    state.token = token
+  }
 }
 // actions:处理action
 const actions = {
@@ -26,6 +30,22 @@ const actions = {
   async userRegister ({ commit }, data) {
     let res = await reqRegister(data)
     if (res.code === 200) {
+      return 'ok'
+    } else {
+      return Promise.reject(new Error('fail'))
+    }
+  },
+  // 用户登录
+  // 当你点击登录按钮的时候，需要把手机号、密码需要携带给服务器，服务器需要判断，你是不是我的用户【注册过的】
+  // 如果是用户登录成功，进行登录，如果用户登录失败给一个提示即可。
+  // token【令牌：字符串，服务器下发给用户的身份凭证】
+  async userLogin ({ commit }, data) {
+    let res = await reqUserLogin(data)
+    if (res.code === 200) {
+      // 后台返回一个token字符串，是某一个用户的唯一标识
+      // 将来通过带token找服务器要用户信息进行展示
+      commit('USERLOGIN', res.data.token)
+      // localStorage.setItem('token',res.data.token)
       return 'ok'
     } else {
       return Promise.reject(new Error('fail'))

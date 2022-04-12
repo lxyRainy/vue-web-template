@@ -8,21 +8,21 @@
             <a href="##" style="border-right: 0">扫描登录</a>
           </li>
           <li>
-            <a href="##" class="current">账户登录</a>
+            <a href="#" class="current">账户登录</a>
           </li>
         </ul>
 
         <div class="content">
-          <form action="##">
+          <form>
             <div class="input-text clearFix">
               <i></i>
-              <input type="text" placeholder="手机号" />
+              <input type="text" placeholder="手机号" v-model="phone" />
               <span class="error-msg">错误提示信息</span>
             </div>
 
             <div class="input-text clearFix">
               <i class="pwd"></i>
-              <input type="text" placeholder="请输入密码" />
+              <input type="text" placeholder="请输入密码" v-model="password" />
               <span class="error-msg">错误提示信息</span>
             </div>
 
@@ -33,7 +33,8 @@
               </label>
               <span class="forget">忘记密码？</span>
             </div>
-            <button class="btn">登&nbsp;&nbsp;录</button>
+            <!-- 阻止默认行为 -->
+            <button class="btn" @click.prevent="userLogin">登&nbsp;&nbsp;录</button>
           </form>
           <div class="call clearFix">
             <ul>
@@ -53,6 +54,25 @@
 <script>
 export default {
   name: "Login",
+  data () {
+    return {
+      phone: '',
+      password: ''
+    }
+  },
+  methods: {
+    // 登录的回调
+    async userLogin () {
+      try {
+        const { phone, password } = this
+        phone && password && await this.$store.dispatch('userLogin', { phone, password })
+        this.$router.push('/home')
+      } catch (error) {
+        console.log(alert(error.message))
+      }
+
+    }
+  }
 };
 </script>
 
