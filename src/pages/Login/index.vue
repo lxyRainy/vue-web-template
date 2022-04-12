@@ -34,7 +34,9 @@
               <span class="forget">忘记密码？</span>
             </div>
             <!-- 阻止默认行为 -->
-            <button class="btn" @click.prevent="userLogin">登&nbsp;&nbsp;录</button>
+            <button class="btn" @click.prevent="userLogin">
+              登&nbsp;&nbsp;录
+            </button>
           </form>
           <div class="call clearFix">
             <ul>
@@ -54,25 +56,28 @@
 <script>
 export default {
   name: "Login",
-  data () {
+  data() {
     return {
-      phone: '',
-      password: ''
-    }
+      phone: "",
+      password: "",
+    };
   },
   methods: {
     // 登录的回调
-    async userLogin () {
+    async userLogin() {
       try {
-        const { phone, password } = this
-        phone && password && await this.$store.dispatch('userLogin', { phone, password })
-        this.$router.push('/home')
+        const { phone, password } = this;
+        phone &&
+          password &&
+          (await this.$store.dispatch("userLogin", { phone, password }));
+        // 登录的路由组件是否包含query参数，有：跳到query参数指定的路由
+        let toPath = this.$route.query.redirect || "/home";
+        this.$router.push(toPath);
       } catch (error) {
-        console.log(alert(error.message))
+        console.log(alert(error.message));
       }
-
-    }
-  }
+    },
+  },
 };
 </script>
 

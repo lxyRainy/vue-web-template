@@ -142,7 +142,8 @@ router.beforeEach(async (to, from, next) => {
     if (whiteList.indexOf(to.path) != -1) {
       next()
     } else {
-      next("/login")
+      // 重定向到想去但没去成的页面，存储到地址栏中
+      next("/login?redirect=" + to.path)
     }
   }
 })
