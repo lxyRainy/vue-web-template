@@ -75,3 +75,7 @@ a:link:hover{
     clear: both;
     visibility: hidden;
 }
+.inner{
+  width: 1150px;
+  margin: 0 auto;
+}

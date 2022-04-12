@@ -6,6 +6,7 @@ import Home from "@/pages/Home"
 import Login from "@/pages/Login"
 import Register from "@/pages/Register"
 import Search from "@/pages/Search"
+import PageDemo from "@/pages/PageDemo/pageDemo"
 import store from "@/store"
 
 Vue.use(VueRouter)
@@ -65,6 +66,13 @@ let router = new VueRouter({
       },
     },
     {
+      path: "/demo",
+      component: PageDemo,
+      meta: {
+        footer: true,
+      },
+    },
+    {
       // 可以指定params参数可传可不传，加个问号
       path: "/search/:keyword?",
       name: "search",
@@ -94,7 +102,7 @@ let router = new VueRouter({
   ],
 })
 // 全局守卫：前置守卫，在路由跳转之前判断
-let whiteList = ['/home', '/login', '/register']// 白名单
+let whiteList = ['/home', '/login', '/register']// 项目白名单
 router.beforeEach((to, from, next) => {
   // next()//放行
   // next(path)//放行到指定路由
