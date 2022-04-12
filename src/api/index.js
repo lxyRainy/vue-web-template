@@ -6,3 +6,17 @@ import requests from "./request"
 export const reqgetCategoryList = () => {
   return requests.get(`/product/getBaseCategoryList`)
 }
+
+// 获取验证码
+export const reqGetCode = (phone) => requests(
+  {
+    url: `/user/passport/sendCode/${phone}`,
+    method: 'get'
+  })
+// 注册
+export const reqRegister = (data) => requests(
+  {
+    url: `/user/passport/register`,
+    method: 'post',
+    data
+  })

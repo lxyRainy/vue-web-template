@@ -5,8 +5,9 @@ import Vue from "vue";
 //使用插件
 Vue.use(Vuex);
 
-import home from './home'
-import search from './search'
+import home from './home.js'
+import search from './search.js'
+import user from './user.js'
 
 // 对外暴露一个store类的一个实例
 export default new Vuex.Store({
@@ -14,5 +15,6 @@ export default new Vuex.Store({
   modules: {
     home,
     search,
+    user
   },
 })
