@@ -6,6 +6,7 @@ import Home from "@/pages/Home"
 import Login from "@/pages/Login"
 import Register from "@/pages/Register"
 import Search from "@/pages/Search"
+import store from "@/store"
 
 Vue.use(VueRouter)
 
@@ -39,7 +40,7 @@ VueRouter.prototype.replace = function (location, resolve, reject) {
     )
   }
 }
-export default new VueRouter({
+let router = new VueRouter({
   // 配置路由
   routes: [
     {
@@ -92,3 +93,31 @@ export default new VueRouter({
     },
   ],
 })
+// 全局守卫：前置守卫，在路由跳转之前判断
+let whiteList = ['/home', '/login', '/register']// 白名单
+router.beforeEach((to, from, next) => {
+  // next()//放行
+  // next(path)//放行到指定路由
+  // next(false)//中断当前的导航
+  console.log('to', to)
+  console.log('whiteList.indexOf(to.path)', whiteList.indexOf(to.path))
+  // 用户登录了才会有token 获取token
+  let token = store.state.user.token
+  if (token) {
+    // 用户已经登录了，还想去login，不能
+    if (to.path === '/login') {
+      next('/home')// 跳到首页
+    } else {
+      next()
+    }
+  } else {// 未登录
+    if (whiteList.indexOf(to.path) != -1) {
+      next()
+    } else {
+      next('/login')
+    }
+  }
+
+
+})
+export default router
