@@ -8,6 +8,7 @@ import Register from "@/pages/Register"
 import Search from "@/pages/Search"
 import PageDemo from "@/pages/PageDemo/pageDemo"
 import store from "@/store"
+import { removeToken } from "@/utils/token"
 
 Vue.use(VueRouter)
 
@@ -23,9 +24,10 @@ VueRouter.prototype.push = function (location, resolve, reject) {
     originPush.call(this, location, resolve, reject)
   } else {
     originPush.call(
-      this, location,
-      () => { },
-      () => { }
+      this,
+      location,
+      () => {},
+      () => {}
     )
   }
 }
@@ -35,9 +37,10 @@ VueRouter.prototype.replace = function (location, resolve, reject) {
     originReplace.call(this, location, resolve, reject)
   } else {
     originReplace.call(
-      this, location,
-      () => { },
-      () => { }
+      this,
+      location,
+      () => {},
+      () => {}
     )
   }
 }
@@ -102,30 +105,45 @@ let router = new VueRouter({
   ],
 })
 // 全局守卫：前置守卫，在路由跳转之前判断
-let whiteList = ['/home', '/login', '/register']// 项目白名单
-router.beforeEach((to, from, next) => {
+let whiteList = ["/home", "/login", "/register"] // 未登录的白名单
+router.beforeEach(async (to, from, next) => {
   // next()//放行
   // next(path)//放行到指定路由
   // next(false)//中断当前的导航
-  console.log('to', to)
-  console.log('whiteList.indexOf(to.path)', whiteList.indexOf(to.path))
+  console.log("to", to)
+  console.log("whiteList.indexOf(to.path)", whiteList.indexOf(to.path))
   // 用户登录了才会有token 获取token
   let token = store.state.user.token
+  let name = store.state.user.userInfo.name
   if (token) {
     // 用户已经登录了，还想去login，不能
-    if (to.path === '/login') {
-      next('/home')// 跳到首页
+    if (to.path === "/login") {
+      next("/home") // 跳到首页
     } else {
-      next()
+      // 不是login
+      // 如果用户信息存在
+      if (name) {
+        next()
+      } else {
+        try {
+          // 没有用户信息，派发action让用户存储用户信息再跳转
+          await store.dispatch("userInfo")
+          next()
+        } catch (error) {
+          // token失效了
+          // 清空存的数据
+          await store.dispatch("userLogout")
+          next("/login")
+        }
+      }
     }
-  } else {// 未登录
+  } else {
+    // 未登录
     if (whiteList.indexOf(to.path) != -1) {
       next()
     } else {
-      next('/login')
+      next("/login")
     }
   }
-
-
 })
 export default router
