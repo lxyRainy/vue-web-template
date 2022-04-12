@@ -1,5 +1,5 @@
-import { reqGetCode, reqRegister, reqUserLogin, reqUserInfo } from '@/api'
-import { setToken, getToken } from '@/utils/token'
+import { reqGetCode, reqRegister, reqUserLogin, reqUserInfo, reqLogout } from '@/api'
+import { setToken, getToken, removeToken } from '@/utils/token'
 // 登录注册模块
 // state：存储数据的地方
 const state = {
@@ -17,11 +17,18 @@ const mutations = {
   },
   SAVEUSERINFO (state, userInfo) {
     state.userInfo = userInfo
+  },
+  CLEARUSER (state) {
+    // 仓库中的情况
+    state.token = ''
+    state.userInfo = {}
+    // 清除本地的数据
+    removeToken()
   }
 }
 // actions:处理action
+// 写业务逻辑，但是不能修改state
 const actions = {
-  // 写业务逻辑，但是不能修改state
   // 获取验证码，这个接口，目前是把验证码返回，暂时不真正发短信
   async getCode ({ commit }, phone) {
     // 调接口
@@ -62,6 +69,16 @@ const actions = {
     let res = await reqUserInfo()
     if (res.code === 200) {
       commit('SAVEUSERINFO', res.data)
+      return 'ok'
+    } else {
+      return Promise.reject(new Error('fail'))
+    }
+  },
+  // 退出登录
+  async userLogout ({ commit }) {
+    let res = await reqLogout()
+    if (res.code === 200) {
+      commit('CLEARUSER', res.data)
       return 'ok'
     } else {
       return Promise.reject(new Error('fail'))

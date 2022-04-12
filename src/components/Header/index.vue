@@ -14,6 +14,8 @@
           </p>
           <p v-else>
             {{userName}}
+            |
+            <a class="register" @click="logout" style="cursor:pointer">退出登录</a>
           </p>
         </div>
         <div class="typeList">
@@ -75,15 +77,24 @@ export default {
         },
       });
     },
+    // 退出登录
+    async logout () {
+      // 退出登录
+      // 1发请求，需要通知服务器，把现在用户身份token【销毁】
+      // 2清除仓库数据+本地存储数据【都需要清理】
+      try {
+        await this.$store.dispatch('userLogout')
+        this.$router.push('/home')
+      } catch (error) {
+        alert(error.message)
+      }
+
+    }
   },
   computed: {
     userName () {
       return this.$store.state.user.userInfo.name
     }
-    //state:他是咱们大仓库中的state（包含home|search）
-    // ...mapState({
-    //   userInfo: (state) => state.user.userInfo
-    // }),
   }
 };
 </script>
