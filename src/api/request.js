@@ -1,4 +1,5 @@
 // 对于axios进行二次封装
+import store from "@/store"
 import axios from "axios"
 // 引入进度条
 import nprogress from 'nprogress'
@@ -16,6 +17,11 @@ let requests = axios.create({
 
 // 请求拦截器----在项目中发请求（请求没有发出去）可以做一些事情
 requests.interceptors.request.use((config) => {
+  // 需要携带token给服务器
+  let token = store.state.user.token
+  if (token) {
+    config.headers.token = token
+  }
   nprogress.start()//进度条开始
   // config:配置对象，包含header请求头
   return config
@@ -30,7 +36,7 @@ requests.interceptors.response.use(
   (err) => {
     //   失败的回调函数
     console.log("err", err)
-    return Promise.reject(new Error('faile'))
+    return Promise.reject(new Error('fail'))
   }
 )
 

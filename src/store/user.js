@@ -1,8 +1,11 @@
-import { reqGetCode, reqRegister, reqUserLogin } from '@/api'
+import { reqGetCode, reqRegister, reqUserLogin, reqUserInfo } from '@/api'
+import { setToken, getToken } from '@/utils/token'
+// 登录注册模块
 // state：存储数据的地方
 const state = {
   code: '',
-  token: ''
+  token: getToken(),
+  userInfo: {}
 }
 // mutations : 修改state
 const mutations = {
@@ -11,6 +14,9 @@ const mutations = {
   },
   USERLOGIN (state, token) {
     state.token = token
+  },
+  SAVEUSERINFO (state, userInfo) {
+    state.userInfo = userInfo
   }
 }
 // actions:处理action
@@ -45,16 +51,27 @@ const actions = {
       // 后台返回一个token字符串，是某一个用户的唯一标识
       // 将来通过带token找服务器要用户信息进行展示
       commit('USERLOGIN', res.data.token)
-      // localStorage.setItem('token',res.data.token)
+      setToken(res.data.token)
       return 'ok'
     } else {
       return Promise.reject(new Error('fail'))
     }
-  }
+  },
+  // 获取用户信息
+  async userInfo ({ commit }) {
+    let res = await reqUserInfo()
+    if (res.code === 200) {
+      commit('SAVEUSERINFO', res.data)
+      return 'ok'
+    } else {
+      return Promise.reject(new Error('fail'))
+    }
+  },
+
 }
 // getters:理解为计算属性
 const getters = {}
-
+// 注意 vuex仓库不是持久化的，一刷新页面就没了
 export default {
   state, mutations, actions, getters
 }

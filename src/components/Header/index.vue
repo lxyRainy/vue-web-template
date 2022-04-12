@@ -6,11 +6,14 @@
       <div class="container">
         <div class="loginList">
           <p>尚品汇欢迎您！</p>
-          <p>
+          <p v-if="!userName">
             <span>请</span>
             <!-- 声明式导航 -->
-            <router-link to="/login">登录</router-link>
+            <router-link to="/login">登录</router-link> |
             <router-link to="register" class="/register">免费注册</router-link>
+          </p>
+          <p v-else>
+            {{userName}}
           </p>
         </div>
         <div class="typeList">
@@ -34,17 +37,8 @@
       </h1>
       <div class="searchArea">
         <form action="###" class="searchForm">
-          <input
-            type="text"
-            id="autocomplete"
-            class="input-error input-xxlarge"
-            v-model="keyword"
-          />
-          <button
-            class="sui-btn btn-xlarge btn-danger"
-            type="button"
-            @click="goSearch"
-          >
+          <input type="text" id="autocomplete" class="input-error input-xxlarge" v-model="keyword" />
+          <button class="sui-btn btn-xlarge btn-danger" type="button" @click="goSearch">
             搜索
           </button>
         </form>
@@ -54,16 +48,17 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "Header",
-  data() {
+  data () {
     return {
       keyword: "",
     };
   },
   methods: {
     // 搜索按钮的回调函数，向search路由跳转
-    goSearch() {
+    goSearch () {
       // 字符串形式
       // this.$router.push(
       //   "/search/" + this.keyword + "?k=" + this.keyword.toLowerCase()
@@ -81,6 +76,15 @@ export default {
       });
     },
   },
+  computed: {
+    userName () {
+      return this.$store.state.user.userInfo.name
+    }
+    //state:他是咱们大仓库中的state（包含home|search）
+    // ...mapState({
+    //   userInfo: (state) => state.user.userInfo
+    // }),
+  }
 };
 </script>
 

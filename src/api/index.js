@@ -27,3 +27,9 @@ export const reqUserLogin = (data) => requests(
     method: 'post',
     data
   })
+// 获取用户信息——需要带着token向用户发信息，放到header里
+export const reqUserInfo = () => requests(
+  {
+    url: `/user/passport/auth/getUserInfo`,
+    method: 'get',
+  })

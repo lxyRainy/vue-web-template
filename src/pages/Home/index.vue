@@ -23,7 +23,8 @@ export default {
   name: "Home",
   components: { ListContainer, Recommend, Rank, Like, Floor, Brand },
   mounted () {
-
+    // 获取用户信息在首页展示
+    this.$store.dispatch('userInfo')
   }
 };
 </script>
