@@ -2,13 +2,16 @@ import Vue from "vue"
 //引入vue-router路由插件
 import VueRouter from "vue-router"
 
-import Home from "@/pages/Home"
-import Login from "@/pages/Login"
-import Register from "@/pages/Register"
-import Search from "@/pages/Search"
-import PageDemo from "@/pages/PageDemo/pageDemo"
+import Home from "@/pages/Home" // 首页
+import Login from "@/pages/Login" // 登录
+import Register from "@/pages/Register" // 注册
+import Search from "@/pages/Search" // 搜索页
+import PageDemo from "@/pages/PageDemo/pageDemo" // demo例子
+import Center from "@/pages/Center" // 个人中心
+import MyOrder from "@/pages/Center/MyOrder" // 个人中心-子页面
+import GroupOrder from "@/pages/Center/GroupOrder" // 个人中心-子页面
 import store from "@/store"
-import { removeToken } from "@/utils/token"
+
 
 Vue.use(VueRouter)
 
@@ -26,8 +29,8 @@ VueRouter.prototype.push = function (location, resolve, reject) {
     originPush.call(
       this,
       location,
-      () => {},
-      () => {}
+      () => { },
+      () => { }
     )
   }
 }
@@ -39,8 +42,8 @@ VueRouter.prototype.replace = function (location, resolve, reject) {
     originReplace.call(
       this,
       location,
-      () => {},
-      () => {}
+      () => { },
+      () => { }
     )
   }
 }
@@ -60,6 +63,28 @@ let router = new VueRouter({
       meta: {
         footer: false,
       },
+    },
+    {
+      path: "/center",
+      component: Center,
+      meta: {
+        footer: true,
+      },
+      // 个人中心子页面路由
+      children: [
+        {
+          path: 'myorder',
+          component: MyOrder
+        },
+        {
+          path: 'grouporder',
+          component: GroupOrder
+        },
+        {
+          path: '/center',
+          redirect: '/center/myorder'
+        }
+      ]
     },
     {
       path: "/register",
@@ -105,7 +130,7 @@ let router = new VueRouter({
   ],
 })
 // 全局守卫：前置守卫，在路由跳转之前判断
-let whiteList = ["/home", "/login", "/register"] // 未登录的白名单
+let whiteList = ["/", "/home", "/login", "/register"] // 未登录的白名单
 router.beforeEach(async (to, from, next) => {
   // next()//放行
   // next(path)//放行到指定路由
