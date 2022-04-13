@@ -19,9 +19,9 @@
           </p>
         </div>
         <div class="typeList">
-          <a href="###">我的订单</a>
+          <router-link to="/center/myorder">我的订单</router-link>
           <a href="###">我的购物车</a>
-          <a href="###">我的尚品汇</a>
+          <router to="/center">我的尚品汇</router>
           <a href="###">尚品汇会员</a>
           <a href="###">企业采购</a>
           <a href="###">关注尚品汇</a>
@@ -33,7 +33,7 @@
     <!--头部第二行 搜索区域-->
     <div class="bottom">
       <h1 class="logoArea">
-        <router-link class="logo" title="尚品汇" to="home">
+        <router-link class="logo" title="尚品汇" to="/home">
           <img src="./images/logo.png" alt="" />
         </router-link>
       </h1>
