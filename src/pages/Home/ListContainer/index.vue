@@ -6,9 +6,18 @@
         <!--banner轮播-->
         <div class="swiper-container" id="mySwiper">
           <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <img src="./images/banner1.jpg" />
+            <div class="block">
+              <el-carousel trigger="click" height="464px">
+                <el-carousel-item v-for="item in bannerList" :key="item.id">
+                  <h3 class="small">
+                    <img :src="item.imgUrl" alt="" class="lbt_img" />
+                  </h3>
+                </el-carousel-item>
+              </el-carousel>
             </div>
+            <!-- <div class="swiper-slide">
+              <img src="./images/banner1.jpg" />
+            </div> -->
             <!-- <div class="swiper-slide">
               <img src="./images/banner2.jpg" />
             </div>
@@ -101,12 +110,45 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "ListContainer",
+  // computed: {
+  //   bannerList() {
+  //     return this.$router.state.home.bannerList;
+  //   },
+  // },
+  computed: {
+    ...mapState({
+      bannerList: (state) => state.home.bannerList,
+    }),
+  },
+  mounted() {
+    this.$store.dispatch("getBannerList");
+  },
 };
 </script>
 
 <style scoped lang="less">
+.el-carousel__item h3 {
+  color: #475669;
+  font-size: 14px;
+  opacity: 0.75;
+  line-height: 150px;
+  margin: 0;
+}
+
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
+
+.el-carousel__item:nth-child(2n + 1) {
+  background-color: #d3dce6;
+}
+.lbt_img {
+  width: 100%;
+  height: 100%;
+}
 .list-container {
   width: 1200px;
   margin: 0 auto;
