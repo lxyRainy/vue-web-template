@@ -2,36 +2,51 @@
   <!-- 商品分类导航 -->
   <div class="type-nav">
     <div class="container">
-      <div @mouseleave="leaveIndex">
+      <div @mouseleave="leaveShow" @mouseenter="enterShow">
         <h2 class="all">全部商品分类</h2>
-        <!-- 三级联动 -->
-        <div class="sort">
-          <div class="all-sort-list2">
-            <!-- 一级列表 -->
-            <div class="item" v-for="(c1,index) in categoryList" :key='c1.categoryId'
-              :class="{cur:currentIndex===index}">
-              <h3 @mouseenter="changeIndex(index)">
-                <a href="">{{c1.categoryName}}</a>
-              </h3>
-              <!-- 二级和三级列表 -->
-              <div class="item-list clearfix" :style="{display:currentIndex===index?'block':'none'}">
-                <div class="subitem" v-for="c2 in c1.categoryChild" :key="c2.categoryId">
-                  <dl class="fore">
-                    <dt>
-                      <a href="">{{c2.categoryName}}</a>
-                    </dt>
-                    <dd>
-                      <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
-                        <a href="">{{c3.categoryName}}</a>
-                      </em>
-                    </dd>
-                  </dl>
+        <!-- 过渡动画   -->
+        <transition name="sort">
+          <!-- 三级联动 -->
+          <div class="sort" v-show="show">
+            <div class="all-sort-list2">
+              <!-- 一级列表 -->
+              <div
+                class="item"
+                v-for="(c1, index) in categoryList"
+                :key="c1.categoryId"
+                :class="{ cur: currentIndex === index }"
+              >
+                <h3 @mouseenter="changeIndex(index)">
+                  <a href="">{{ c1.categoryName }}</a>
+                </h3>
+                <!-- 二级和三级列表 -->
+                <div
+                  class="item-list clearfix"
+                  :style="{
+                    display: currentIndex === index ? 'block' : 'none',
+                  }"
+                >
+                  <div
+                    class="subitem"
+                    v-for="c2 in c1.categoryChild"
+                    :key="c2.categoryId"
+                  >
+                    <dl class="fore">
+                      <dt>
+                        <a href="">{{ c2.categoryName }}</a>
+                      </dt>
+                      <dd>
+                        <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
+                          <a href="">{{ c3.categoryName }}</a>
+                        </em>
+                      </dd>
+                    </dl>
+                  </div>
                 </div>
               </div>
             </div>
-
           </div>
-        </div>
+        </transition>
       </div>
       <nav class="nav">
         <a href="###">服装城</a>
@@ -43,7 +58,6 @@
         <a href="###">有趣</a>
         <a href="###">秒杀</a>
       </nav>
-
     </div>
   </div>
 </template>
@@ -52,16 +66,22 @@
 import { mapState } from "vuex";
 export default {
   name: "TypeNav",
-  data () {
+  data() {
     return {
-      currentIndex: -1
-    }
+      currentIndex: -1,
+      show: true,
+    };
   },
   // 组件过载完毕，可以向服务器发请求
-  mounted () {
+  mounted() {
     // 通过vuex发送请求，获取数据，存储在仓库中
     //派发一个action||获取商品分类的三级列表的数据
     this.$store.dispatch("getCategoryList");
+    // 当组件过载完毕
+    console.log("this.$route", this.$route);
+    if (this.$route.path !== "/home") {
+      this.show = false;
+    }
   },
   computed: {
     //state:他是咱们大仓库中的state（包含home|search）
@@ -70,14 +90,23 @@ export default {
     }),
   },
   methods: {
-    changeIndex (index) {
-      console.log('index', index)
-      this.currentIndex = index
+    changeIndex(index) {
+      console.log("index", index);
+      this.currentIndex = index;
     },
-    leaveIndex () {
-      this.currentIndex = -1
-    }
-  }
+    leaveShow() {
+      this.currentIndex = -1;
+      if (this.$router.path !== "/home") {
+        this.show = false;
+      }
+    },
+    // 路由跳转的回调参数
+    goSearch() {},
+    // 鼠标移入的时候展示
+    enterShow() {
+      this.show = true;
+    },
+  },
 };
 </script>
 
@@ -201,6 +230,16 @@ export default {
           background: skyblue;
         }
       }
+    }
+    // 过渡动画的样式
+    .sort-enter {
+      height: 0;
+    }
+    .sort-enter-to {
+      height: 461px;
+    }
+    .sort-enter-active {
+      transition: all 0.2s linear;
     }
   }
 }

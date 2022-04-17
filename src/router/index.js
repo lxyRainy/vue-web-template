@@ -12,7 +12,6 @@ import MyOrder from "@/pages/Center/MyOrder" // 个人中心-子页面
 import GroupOrder from "@/pages/Center/GroupOrder" // 个人中心-子页面
 import store from "@/store"
 
-
 Vue.use(VueRouter)
 
 // 先把vueRouter的原型对象的push存下来
@@ -29,8 +28,8 @@ VueRouter.prototype.push = function (location, resolve, reject) {
     originPush.call(
       this,
       location,
-      () => { },
-      () => { }
+      () => {},
+      () => {}
     )
   }
 }
@@ -42,8 +41,8 @@ VueRouter.prototype.replace = function (location, resolve, reject) {
     originReplace.call(
       this,
       location,
-      () => { },
-      () => { }
+      () => {},
+      () => {}
     )
   }
 }
@@ -73,18 +72,18 @@ let router = new VueRouter({
       // 个人中心子页面路由
       children: [
         {
-          path: 'myorder',
-          component: MyOrder
+          path: "myorder",
+          component: MyOrder,
         },
         {
-          path: 'grouporder',
-          component: GroupOrder
+          path: "grouporder",
+          component: GroupOrder,
         },
         {
-          path: '/center',
-          redirect: '/center/myorder'
-        }
-      ]
+          path: "/center",
+          redirect: "/center/myorder",
+        },
+      ],
     },
     {
       path: "/register",
@@ -130,7 +129,7 @@ let router = new VueRouter({
   ],
 })
 // 全局守卫：前置守卫，在路由跳转之前判断
-let whiteList = ["/", "/home", "/login", "/register"] // 未登录的白名单
+let whiteList = ["/", "/home", "/login", "/register", "/search"] // 未登录的白名单
 router.beforeEach(async (to, from, next) => {
   // next()//放行
   // next(path)//放行到指定路由
