@@ -8,7 +8,7 @@
         <transition name="sort">
           <!-- 三级联动 -->
           <div class="sort" v-show="show">
-            <div class="all-sort-list2">
+            <div class="all-sort-list2" @click="goSearch">
               <!-- 一级列表 -->
               <div
                 class="item"
@@ -17,7 +17,11 @@
                 :class="{ cur: currentIndex === index }"
               >
                 <h3 @mouseenter="changeIndex(index)">
-                  <a href="">{{ c1.categoryName }}</a>
+                  <a
+                    :data-categoryName="c1.categoryName"
+                    :data-category1id="c1.categoryId"
+                    >{{ c1.categoryName }}</a
+                  >
                 </h3>
                 <!-- 二级和三级列表 -->
                 <div
@@ -33,11 +37,19 @@
                   >
                     <dl class="fore">
                       <dt>
-                        <a href="">{{ c2.categoryName }}</a>
+                        <a
+                          :data-categoryName="c2.categoryName"
+                          :data-category2id="c2.categoryId"
+                          >{{ c2.categoryName }}</a
+                        >
                       </dt>
                       <dd>
                         <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
-                          <a href="">{{ c3.categoryName }}</a>
+                          <a
+                            :data-categoryName="c3.categoryName"
+                            :data-category3id="c3.categoryId"
+                            >{{ c3.categoryName }}</a
+                          >
                         </em>
                       </dd>
                     </dl>
@@ -76,7 +88,7 @@ export default {
   mounted() {
     // 通过vuex发送请求，获取数据，存储在仓库中
     //派发一个action||获取商品分类的三级列表的数据
-    this.$store.dispatch("getCategoryList");
+    // this.$store.dispatch("getCategoryList");
     // 当组件过载完毕
     console.log("this.$route", this.$route);
     if (this.$route.path !== "/home") {
@@ -100,8 +112,33 @@ export default {
         this.show = false;
       }
     },
-    // 路由跳转的回调参数
-    goSearch() {},
+    // 路由跳转的回调参数(编程式导航+事件委派)
+    goSearch(event) {
+      // 点击的一定是a标签
+      // 获取到触发事件的元素
+      let node = event.target; // 【h3\a\dl\dt】
+      /// 获取自定义属性、属性值——注意是小写
+      // 拥有categorynamde的一定是a标签
+      let { categoryname, category1id, category2id, category3id } =
+        node.dataset;
+      let location = { name: "/search" };
+      if (categoryname) {
+        //整理路由跳转的参数
+        let query = {
+          categoryName: categoryname,
+        };
+        // 一级
+        if (category1id) {
+          query.category1Id = category1id;
+        } else if (category2id) {
+          query.category2Id = category2id;
+        } else {
+          query.category3Id = category3id;
+        }
+        location.query = query;
+        this.$router.push(location);
+      }
+    },
     // 鼠标移入的时候展示
     enterShow() {
       this.show = true;
