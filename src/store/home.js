@@ -1,10 +1,12 @@
-import { reqgetCategoryList, reqGetBannerList } from "@/api"
+import { reqgetCategoryList, reqGetBannerList, reqGetFloorList } from "@/api"
 
 // state：存储数据的地方
 const state = {
   //home仓库中存储三级菜单的数据
   categoryList: [],
+  // 轮播图
   bannerList: [],
+  floorList: [],
 }
 // mutations : 修改state
 const mutations = {
@@ -15,6 +17,10 @@ const mutations = {
   GETBANNER(state, bannerList) {
     console.log("获取轮播图")
     state.bannerList = bannerList
+  },
+  GETFLOOR(state, floorList) {
+    console.log("获取Floor")
+    state.floorList = floorList
   },
 }
 // actions:处理action
@@ -33,6 +39,14 @@ const actions = {
     console.log(res)
     if (res.code === 200) {
       commit("GETBANNER", res.data)
+    }
+  },
+  // 获取Floor
+  async getFloorList({ commit }) {
+    let res = await reqGetFloorList()
+    console.log(res)
+    if (res.code === 200) {
+      commit("GETFLOOR", res.data)
     }
   },
 }

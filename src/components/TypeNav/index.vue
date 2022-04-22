@@ -91,7 +91,7 @@ export default {
     // this.$store.dispatch("getCategoryList");
     // 当组件过载完毕
     console.log("this.$route", this.$route);
-    if (this.$route.path !== "/home") {
+    if (this.$route.path !== "/home" && this.$route.path !== "/") {
       this.show = false;
     }
   },
@@ -108,7 +108,7 @@ export default {
     },
     leaveShow() {
       this.currentIndex = -1;
-      if (this.$router.path !== "/home") {
+      if (this.$router.path !== "/home" && this.$route.path !== "/") {
         this.show = false;
       }
     },
