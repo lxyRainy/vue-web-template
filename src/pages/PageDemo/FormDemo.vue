@@ -5,35 +5,14 @@
     label-width="120px"
     class="demo-dynamic"
   >
-    <el-row
-      v-for="(domain, index) in dynamicValidateForm.persons"
-      :key="domain.key"
-    >
+    <el-row v-for="domain in persons" :key="domain.key">
       <el-col :span="8">
         <el-form-item
-          :label="'姓名' + index + 1"
-          :prop="'persons.' + index + '.name'"
-          :rules="rules.name"
+          :label="domain.name"
+          :prop="domain.key"
+          :rules="rules[domain.key]"
         >
-          <el-input v-model="domain.name"></el-input>
-        </el-form-item>
-      </el-col>
-      <el-col :span="8">
-        <el-form-item
-          :label="'手机号码' + index + 1"
-          :prop="'persons.' + index + '.iphone'"
-          :rules="rules.iphone"
-        >
-          <el-input v-model="domain.iphone"></el-input>
-        </el-form-item>
-      </el-col>
-      <el-col :span="8">
-        <el-form-item
-          :label="'身份证号码' + index + 1"
-          :prop="'persons.' + index + '.idCard'"
-          :rules="rules.idCard"
-        >
-          <el-input v-model="domain.idCard"></el-input>
+          <el-input v-model="dynamicValidateForm[domain.key]"></el-input>
         </el-form-item>
       </el-col>
     </el-row>
@@ -51,34 +30,30 @@ export default {
   data() {
     return {
       dynamicValidateForm: {
-        persons: [
-          {
-            name: '',
-            iphone: '',
-            idCard: '',
-          },
-          {
-            name: '',
-            iphone: '',
-            idCard: '',
-          },
-          {
-            name: '',
-            iphone: '',
-            idCard: '',
-          },
-        ],
-        email: '',
+        phone: '13055559999',
+        sex: '1',
       },
+      persons: [
+        {
+          name: '手机号',
+          value: '13055559999',
+          key: 'phone',
+        },
+        {
+          name: '性别',
+          value: '1',
+          key: 'sex',
+        },
+      ],
       rules: {
-        name: [
+        sex: [
           {
             required: true,
-            message: '请输入姓名',
+            message: '请输入姓别',
             trigger: 'blur',
           },
         ],
-        iphone: [
+        phone: [
           {
             required: true,
             message: '请输入手机号码',
@@ -110,6 +85,7 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          console.log('this.dynamicValidateForm', this.dynamicValidateForm)
           alert('submit!')
         } else {
           console.log('error submit!!')
