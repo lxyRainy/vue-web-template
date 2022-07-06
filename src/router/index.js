@@ -48,8 +48,7 @@ VueRouter.prototype.replace = function (location, resolve, reject) {
 }
 let router = new VueRouter({
   // 配置路由
-  routes: [
-    {
+  routes: [{
       path: "/home",
       component: Home,
       meta: {
@@ -70,8 +69,7 @@ let router = new VueRouter({
         footer: true,
       },
       // 个人中心子页面路由
-      children: [
-        {
+      children: [{
           path: "myorder",
           component: MyOrder,
         },
@@ -129,13 +127,13 @@ let router = new VueRouter({
   ],
 })
 // 全局守卫：前置守卫，在路由跳转之前判断
-let whiteList = ["/", "/home", "/login", "/register", "/search"] // 未登录的白名单
+// let whiteList = ["/", "/home", "/login", "/register", "/search"] // 未登录的白名单
 router.beforeEach(async (to, from, next) => {
   // next()//放行
   // next(path)//放行到指定路由
   // next(false)//中断当前的导航
   console.log("to", to)
-  console.log("whiteList.indexOf(to.path)", whiteList.indexOf(to.path))
+  // console.log("whiteList.indexOf(to.path)", whiteList.indexOf(to.path))
   // 用户登录了才会有token 获取token
   let token = store.state.user.token
   let name = store.state.user.userInfo.name
@@ -162,13 +160,14 @@ router.beforeEach(async (to, from, next) => {
       }
     }
   } else {
-    // 未登录
-    if (whiteList.indexOf(to.path) != -1) {
-      next()
-    } else {
-      // 重定向到想去但没去成的页面，存储到地址栏中
-      next("/login?redirect=" + to.path)
-    }
+    next()
+    // // 未登录
+    // if (whiteList.indexOf(to.path) != -1) {
+    //   next()
+    // } else {
+    //   // 重定向到想去但没去成的页面，存储到地址栏中
+    //   next("/login?redirect=" + to.path)
+    // }
   }
 })
 export default router

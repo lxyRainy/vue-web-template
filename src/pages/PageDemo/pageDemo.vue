@@ -53,32 +53,37 @@
         <el-button>取消</el-button>
       </el-form-item>
     </el-form>
+    <FormDemo />
   </div>
 </template>
 
 <script>
+import FormDemo from './FormDemo.vue'
 export default {
-  name: "PageDemo",
+  name: 'PageDemo',
   data() {
     return {
       form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
+        name: '',
+        region: '',
+        date1: '',
+        date2: '',
         delivery: false,
         type: [],
-        resource: "",
-        desc: "",
+        resource: '',
+        desc: '',
       },
-    };
+    }
+  },
+  components: {
+    FormDemo,
   },
   methods: {
     onSubmit() {
-      console.log("submit!");
+      console.log('submit!')
     },
   },
-};
+}
 </script>
 
 <style scoped lang="less">
