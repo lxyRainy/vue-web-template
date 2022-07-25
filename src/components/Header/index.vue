@@ -21,7 +21,7 @@
         <div class="typeList">
           <router-link to="/center/myorder">我的订单</router-link>
           <a href="###">我的购物车</a>
-          <router to="/center">我的尚品汇</router>
+          <router-link to="/center">我的尚品汇</router-link>
           <a href="###">尚品汇会员</a>
           <a href="###">企业采购</a>
           <a href="###">关注尚品汇</a>
