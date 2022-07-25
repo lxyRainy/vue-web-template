@@ -2,7 +2,6 @@
   <div>
     // 你的代码 ... // 使用树形穿梭框组件
     <tree-transfer
-      :title="title"
       :from_data="fromData"
       :to_data="toData"
       :defaultProps="{ label: 'label' }"
@@ -33,7 +32,7 @@ export default {
                 id: "1-1",
                 pid: "1",
                 label: "二级 1-1",
-                disabled: true,
+                // disabled: true,
                 children: []
                 },
                 {

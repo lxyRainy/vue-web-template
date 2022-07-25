@@ -2,12 +2,14 @@
   <div class="inner">
     <FormDemo />
     <TreeTransferDemo/>
+    <EchartsDemo/>
   </div>
 </template>
 
 <script>
 import FormDemo from './FormDemo.vue'
 import TreeTransferDemo from './TreeTransferDemo'
+import EchartsDemo from './EchartsDemo'
 export default {
   name: 'PageDemo',
   data() {
@@ -27,6 +29,7 @@ export default {
   components: {
     TreeTransferDemo,
     FormDemo,
+    EchartsDemo
   },
   methods: {
     onSubmit() {
