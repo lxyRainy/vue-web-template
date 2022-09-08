@@ -3,6 +3,7 @@
     <FormDemo />
     <TreeTransferDemo/>
     <EchartsDemo/>
+    <WebsocketDemo/>
   </div>
 </template>
 
@@ -10,6 +11,7 @@
 import FormDemo from './FormDemo.vue'
 import TreeTransferDemo from './TreeTransferDemo'
 import EchartsDemo from './EchartsDemo'
+import WebsocketDemo from './WebsocketDemo'
 export default {
   name: 'PageDemo',
   data() {
@@ -29,7 +31,8 @@ export default {
   components: {
     TreeTransferDemo,
     FormDemo,
-    EchartsDemo
+    EchartsDemo,
+    WebsocketDemo
   },
   methods: {
     onSubmit() {

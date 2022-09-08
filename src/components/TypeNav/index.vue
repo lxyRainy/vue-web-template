@@ -2,7 +2,7 @@
   <!-- 商品分类导航 -->
   <div class="type-nav">
     <div class="container">
-      <div @mouseleave="leaveShow" @mouseenter="enterShow">
+      <div @mouseleave="leaveShow"  @mouseenter="enterShow">
         <h2 class="all">全部商品分类</h2>
         <!-- 过渡动画   -->
         <transition name="sort">
@@ -17,8 +17,7 @@
                 :class="{ cur: currentIndex === index }"
               >
                 <h3 @mouseenter="changeIndex(index)">
-                  <a
-                    :data-categoryName="c1.categoryName"
+                  <a :data-categoryName="c1.categoryName"
                     :data-category1id="c1.categoryId"
                     >{{ c1.categoryName }}</a
                   >
