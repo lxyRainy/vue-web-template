@@ -83,18 +83,13 @@ export default {
       this.selectdata[String(Object.keys(filters))] =
         filters[String(Object.keys(filters))];
       this.newData = JSON.parse(localStorage.getItem("table"));
-      for (let j = 0; j < Object.keys(this.selectdata).length; j++) {
-        if (this.selectdata[Object.keys(this.selectdata)[j]].length <= 1) {
-          for (
-            let k = 0;
-            k < this.selectdata[Object.keys(this.selectdata)[j]].length;
-            k++
-          ) {
+      const selectedKeys = Object.keys(this.selectdata);
+      for (let j = 0; j < selectedKeys.length; j++) {
+        const key = selectedKeys[j];
+        if (this.selectdata[key].length <= 1) {
+          for (let k = 0; k < this.selectdata[key].length; k++) {
             for (let i = 0; i < this.newData.length; i++) {
-              if (
-                this.selectdata[Object.keys(this.selectdata)[j]][k] !==
-                this.newData[i][String(Object.keys(this.selectdata)[j])]
-              ) {
+              if (this.selectdata[key][k] !== this.newData[i][String(key)]) {
                 this.newData.splice(i, 1);
                 i--;
               }
